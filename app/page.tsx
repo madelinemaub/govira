@@ -73,7 +73,7 @@ const Header = ({ onHome }) => (
   </div>
 );
 
-const Btn = ({ children, primary, large, onClick, style = {}, disabled }) => (
+const Btn = ({ children, primary = false, large = false, onClick = undefined, style = {}, disabled = false }: any) => (
   <button onClick={onClick} disabled={disabled} style={{
     padding: large ? "16px 32px" : "12px 24px",
     fontSize: large ? 16 : 14,
