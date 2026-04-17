@@ -139,8 +139,7 @@ const StepIndicator = ({ current, total, labels }) => (
 /* ═══════════════════════════════════════════
    SCREEN 1: HERO LANDING PAGE
    ═══════════════════════════════════════════ */
-const HomeScreen = ({ onUpload }) => {
-  const [showAfter, setShowAfter] = useState(false);
+const HomeScreen = ({ onUpload }: any) => {
 
   return (
     <div style={{ background: C.bg }}>
@@ -180,11 +179,11 @@ const HomeScreen = ({ onUpload }) => {
           <FadeIn delay={400}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, marginTop: 48 }}>
               {[
-                { icon: "⊘", title: "What Needs Updating", desc: "Flags where your policy may not align with the latest law." },
-                { icon: "⟐", title: "Human in the Loop", desc: "You review every suggestion. Accept, edit, or skip." },
-                { icon: "⊞", title: "Audit Trail", desc: "One-click export with before/after text and timestamps." },
-                { icon: "◈", title: "Cited Legal Sources", desc: "Every suggestion cites the specific statute or standard." },
-                { icon: "⊕", title: "Export Your Policy", desc: "Download PDF or Word. Works with your existing policy management tools." },
+                { icon: "🔍", title: "What Needs Updating", desc: "Flags where your policy may not align with the latest law." },
+                { icon: "👤", title: "Always Human Reviewed", desc: "You review every suggestion. Accept, edit, or skip." },
+                { icon: "📋", title: "Audit Trail", desc: "One-click export with before/after text and timestamps." },
+                { icon: "⚖️", title: "Cited Legal Sources", desc: "Every suggestion cites the specific statute or standard." },
+                { icon: "📄", title: "Export Your Policy", desc: "Download PDF or Word. Works with your existing policy management tools." },
               ].map((c, i) => (
                 <div key={i} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12, padding: "20px 16px", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(8px)" }}>
                   <div style={{ fontSize: 22, marginBottom: 10, color: C.lightBlue }}>{c.icon}</div>
@@ -231,46 +230,50 @@ const HomeScreen = ({ onUpload }) => {
         </FadeIn>
       </div>
 
-      {/* ─── BEFORE / AFTER ─── */}
+      {/* ─── SEE WHAT CHANGES ─── */}
       <div style={{ background: C.white, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", padding: "64px 32px" }}>
           <FadeIn>
             <div style={{ textAlign: "center", marginBottom: 32 }}>
-              <h2 style={{ fontSize: 28, fontWeight: 700, color: C.navy, margin: "0 0 10px 0" }}>The Govira Difference: Before and After</h2>
-              <p style={{ fontSize: 14, color: C.textMid, margin: "0 0 20px 0" }}>Compare your current policy with the Govira-recommended update. Legal meaning stays the same. Compliance gaps get closed.</p>
-              <div style={{ display: "inline-flex", background: C.bg, borderRadius: 8, padding: 3, border: `1px solid ${C.border}` }}>
-                <button onClick={() => setShowAfter(false)} style={{ padding: "10px 24px", borderRadius: 6, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, background: !showAfter ? C.navy : "transparent", color: !showAfter ? C.white : C.textMid, transition: "all 0.2s ease" }}>Current Policy</button>
-                <button onClick={() => setShowAfter(true)} style={{ padding: "10px 24px", borderRadius: 6, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, background: showAfter ? C.green : "transparent", color: showAfter ? C.white : C.textMid, transition: "all 0.2s ease" }}>Govira Updated</button>
-              </div>
+              <h2 style={{ fontSize: 28, fontWeight: 700, color: C.navy, margin: "0 0 10px 0" }}>See exactly what needs to change</h2>
+              <p style={{ fontSize: 14, color: C.textMid, margin: 0 }}>Review the suggested updates below and accept, edit, or skip each change. Legal changes align your policy with recent legal requirements.</p>
             </div>
           </FadeIn>
 
           <FadeIn delay={100}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
-              {/* Current */}
-              <div style={{ border: `2px solid ${!showAfter ? C.navy : C.border}`, borderRadius: 12, padding: 24, opacity: showAfter ? 0.5 : 1, transition: "all 0.3s ease" }}>
+              {/* Current Policy */}
+              <div style={{ border: `2px solid ${C.border}`, borderRadius: 12, padding: 24 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <span style={{ fontSize: 14 }}>📄</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>Current Policy</span>
                 </div>
                 <p style={{ fontSize: 14, color: C.text, lineHeight: 1.8, margin: 0 }}>
-                  The department shall manage crowd incidents in a manner consistent with public safety, officer safety, and preservation of order. Supervisors shall respond as needed and coordinate resources necessary to maintain control of the situation. Officers shall use appropriate judgment when responding to demonstrations, assemblies, and disturbances.
+                  The department shall manage crowd incidents in a manner consistent with public safety, <span style={{ color: C.red, textDecoration: "line-through" }}>officer safety, and preservation of order</span>. Supervisors shall respond as needed and coordinate resources necessary to maintain control of the situation. <span style={{ color: C.red, textDecoration: "line-through" }}>Officers shall use appropriate judgment when responding to demonstrations, assemblies, and disturbances.</span>
                 </p>
                 <p style={{ fontSize: 12, color: C.textLight, margin: "14px 0 0 0", fontStyle: "italic" }}>Vague language · No force guidance · No documentation trigger</p>
               </div>
 
-              {/* After */}
-              <div style={{ border: `2px solid ${showAfter ? C.green : C.border}`, borderRadius: 12, padding: 24, opacity: showAfter ? 1 : 0.5, transition: "all 0.3s ease", position: "relative" }}>
-                {showAfter && <div style={{ position: "absolute", top: -10, left: 20, background: C.green, color: C.white, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 4, letterSpacing: 0.5 }}>RECOMMENDED</div>}
+              {/* Updated Policy (Recommended) */}
+              <div style={{ border: `2px solid ${C.green}`, borderRadius: 12, padding: 24, position: "relative" }}>
+                <div style={{ position: "absolute", top: -10, left: 20, background: C.green, color: C.white, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 4, letterSpacing: 0.5 }}>RECOMMENDED</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <span style={{ fontSize: 14 }}>✅</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>With Govira</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>Updated Policy (Recommended)</span>
                 </div>
                 <p style={{ fontSize: 14, color: C.text, lineHeight: 1.8, margin: 0 }}>
-                  The department shall manage crowd incidents in a manner consistent with public safety, <span style={{ background: showAfter ? "rgba(5,150,105,0.12)" : "transparent", padding: "1px 3px", borderRadius: 3, transition: "background 0.3s ease" }}>constitutional protections, and applicable statewide crowd-management requirements</span>. Supervisors and officers shall comply with department guidance regarding <span style={{ background: showAfter ? "rgba(5,150,105,0.12)" : "transparent", padding: "1px 3px", borderRadius: 3, transition: "background 0.3s ease" }}>permissible and impermissible uses of force</span> during crowd-management incidents.
+                  The department shall manage crowd incidents in a manner consistent with public safety, <span style={{ background: "rgba(5,150,105,0.12)", padding: "1px 3px", borderRadius: 3, color: C.green, fontWeight: 500 }}>constitutional protections, and applicable statewide crowd-management requirements</span>. Supervisors and officers shall comply with department guidance regarding <span style={{ background: "rgba(5,150,105,0.12)", padding: "1px 3px", borderRadius: 3, color: C.green, fontWeight: 500 }}>permissible and impermissible uses of force</span> during crowd-management incidents.
                 </p>
                 <p style={{ fontSize: 12, color: C.green, margin: "14px 0 0 0", fontWeight: 500 }}>Compliant · Force guidance added · Documentation trigger added</p>
               </div>
+            </div>
+          </FadeIn>
+
+          {/* Why this change is suggested */}
+          <FadeIn delay={200}>
+            <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: 20, marginTop: 20 }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: C.navy, margin: "0 0 6px 0" }}>Why this change is suggested</p>
+              <p style={{ fontSize: 13, color: C.textMid, margin: 0, lineHeight: 1.6 }}>Connecticut HB 6004 (§5) requires crowd-management policy to address permissible and impermissible uses of force, training requirements, and documentation after physical confrontation. The current policy language is too general to demonstrate alignment with these requirements.</p>
             </div>
           </FadeIn>
         </div>
@@ -287,9 +290,9 @@ const HomeScreen = ({ onUpload }) => {
         <FadeIn delay={100}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
             {[
-              { step: "1", icon: "↑", title: "Upload your policy", desc: "Drag and drop or browse for your department policy document. We accept PDF and Word files." },
-              { step: "2", icon: "⟐", title: "Review what needs to be updated", desc: "See exactly what needs to change based on recent legal updates. Accept, edit, or skip each update." },
-              { step: "3", icon: "↓", title: "Download your updated policy", desc: "Export your updated policy and upload it into your existing system." },
+              { step: "1", icon: "📁", title: "Upload your policy", desc: "Drag and drop or browse for your department policy document. We accept PDF and Word files." },
+              { step: "2", icon: "✏️", title: "Review what needs to be updated", desc: "See exactly what needs to change based on recent legal updates. Accept, edit, or skip each update." },
+              { step: "3", icon: "📥", title: "Download your updated policy", desc: "Export your updated policy and upload it into your existing system." },
             ].map((item, i) => (
               <div key={i} style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 12, padding: 28, position: "relative" }}>
                 <div style={{ position: "absolute", top: -12, left: 24, width: 28, height: 28, borderRadius: "50%", background: C.navy, color: C.white, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700 }}>{item.step}</div>
