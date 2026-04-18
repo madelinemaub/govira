@@ -140,6 +140,7 @@ const StepIndicator = ({ current, total, labels }) => (
    SCREEN 1: HERO LANDING PAGE
    ═══════════════════════════════════════════ */
 const HomeScreen = ({ onUpload }: any) => {
+  const [sourceOpen, setSourceOpen] = useState(false);
 
   return (
     <div style={{ background: C.bg }}>
@@ -234,9 +235,29 @@ const HomeScreen = ({ onUpload }: any) => {
       <div style={{ background: C.white, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", padding: "64px 32px" }}>
           <FadeIn>
-            <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ textAlign: "center", marginBottom: 24 }}>
               <h2 style={{ fontSize: 28, fontWeight: 700, color: C.navy, margin: "0 0 10px 0" }}>See exactly what needs to change</h2>
-              <p style={{ fontSize: 14, color: C.textMid, margin: 0 }}>Review the suggested updates below and accept, edit, or skip each change. Legal changes align your policy with recent legal requirements.</p>
+              <p style={{ fontSize: 14, color: C.textMid, margin: 0 }}>Review the suggested updates below and accept, edit, or skip each change.</p>
+            </div>
+          </FadeIn>
+
+          {/* File context bar */}
+          <FadeIn delay={80}>
+            <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, padding: "12px 20px", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 14 }}>📁</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: C.navy }}>Crowd_Management_Policy_6.14.pdf</span>
+                </div>
+                <span style={{ fontSize: 12, color: C.border }}>|</span>
+                <span style={{ fontSize: 12, color: C.textMid }}>Bethany Police Dept.</span>
+                <span style={{ fontSize: 12, color: C.border }}>|</span>
+                <span style={{ fontSize: 12, color: C.textMid }}>Checked against <span style={{ fontWeight: 600, color: C.navy }}>CT HB 6004 (§5)</span></span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.amber }}/>
+                <span style={{ fontSize: 12, fontWeight: 600, color: C.amber }}>4 updates found</span>
+              </div>
             </div>
           </FadeIn>
 
@@ -273,7 +294,22 @@ const HomeScreen = ({ onUpload }: any) => {
           <FadeIn delay={200}>
             <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: 20, marginTop: 20 }}>
               <p style={{ fontSize: 13, fontWeight: 600, color: C.navy, margin: "0 0 6px 0" }}>Why this change is suggested</p>
-              <p style={{ fontSize: 13, color: C.textMid, margin: 0, lineHeight: 1.6 }}>Connecticut HB 6004 (§5) requires crowd-management policy to address permissible and impermissible uses of force, training requirements, and documentation after physical confrontation. The current policy language is too general to demonstrate alignment with these requirements.</p>
+              <p style={{ fontSize: 13, color: C.textMid, margin: "0 0 12px 0", lineHeight: 1.6 }}>Connecticut HB 6004 (§5) requires crowd-management policy to address permissible and impermissible uses of force, training requirements, and documentation after physical confrontation. The current policy language is too general to demonstrate alignment with these requirements.</p>
+              
+              <button onClick={() => setSourceOpen(!sourceOpen)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: C.blue }}>
+                <span style={{ transition: "transform 0.2s ease", display: "inline-block", transform: sourceOpen ? "rotate(90deg)" : "rotate(0deg)" }}>▶</span>
+                {sourceOpen ? "Hide" : "View"} source language from HB 6004
+              </button>
+
+              {sourceOpen && (
+                <div style={{ marginTop: 12, background: C.white, border: `1px solid ${C.border}`, borderRadius: 8, padding: 16 }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: C.textLight, letterSpacing: 0.5, textTransform: "uppercase", margin: "0 0 8px 0" }}>HB 6004, § 5 — Crowd Management Policy (Connecticut General Assembly)</p>
+                  <p style={{ fontSize: 13, color: C.text, lineHeight: 1.8, margin: 0, fontStyle: "italic", borderLeft: `3px solid ${C.blue}`, paddingLeft: 14 }}>
+                    "The policy must also establish guidelines for managing crowds in a manner that protects individual rights and preserves the peace during demonstrations and civil disturbances, addresses permissible and impermissible uses of force by a police officer and the type and amount of crowd management training that each police officer must undergo, and sets forth required documentation after any physical confrontation between a police officer and a civilian during a crowd management incident."
+                  </p>
+                  <p style={{ fontSize: 11, color: C.textLight, margin: "10px 0 0 0" }}>Source: OLR Bill Analysis, HB 6004, Emergency Certification, 2020</p>
+                </div>
+              )}
             </div>
           </FadeIn>
         </div>
