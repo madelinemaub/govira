@@ -396,7 +396,7 @@ const groupBy = (items: any, keyFn: any) => {
     if (!map.has(k)) map.set(k, []);
     map.get(k).push({ ...it, _i: i });
   });
-  return [...map.entries()];
+  return Array.from(map.entries());
 };
 
 const PointerRow = ({ k, v }: any) => (
