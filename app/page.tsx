@@ -1,3 +1,14 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+
+/* ============================================================
+   GOVIRA — redesign
+   Direction: modern records system, not SaaS.
+   Public Sans (USWDS typeface) for UI · Source Serif 4 for law.
+   Document-grade semantic colors. The docket is the signature.
+   ============================================================ */
+
 import React, { useState, useEffect } from "react";
 
 /* ============================================================
