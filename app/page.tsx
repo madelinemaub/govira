@@ -573,7 +573,7 @@ const LawDetail = ({ data, onBack }: any) => {
                 })}
               </div>
             ))}
-            <Notice>Govira points to what may warrant review. It does not draft or replace policy language. Reviews run through your department's normal policy process.</Notice>
+            <Notice>Govira points to what may warrant review. It does not draft or replace policy language. Reviews run through your department’s normal policy process.</Notice>
           </div>
 
           {/* 3. STEPS TO CONSIDER */}
