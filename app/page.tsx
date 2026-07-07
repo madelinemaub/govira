@@ -3,34 +3,26 @@
 import React, { useState, useEffect } from "react";
 
 /* ============================================================
-   GOVIRA — redesign
-   Direction: modern records system, not SaaS.
-   Public Sans (USWDS typeface) for UI · Source Serif 4 for law.
-   Document-grade semantic colors. The docket is the signature.
-   ============================================================ */
-
-import React, { useState, useEffect } from "react";
-
-/* ============================================================
-   GOVIRA — redesign
-   Direction: modern records system, not SaaS.
-   Public Sans (USWDS typeface) for UI · Source Serif 4 for law.
-   Document-grade semantic colors. The docket is the signature.
+   GOVIRA — redesign v3 (Next.js App Router page)
+   Direction: state records office, not startup.
+   Navy masthead · Source Serif 4 carries the law · Public Sans UI.
+   All accents navy. Suggestive register: "may apply," "consider."
+   Drop this file in app/page.tsx and deploy to Vercel.
    ============================================================ */
 
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap";
+  "https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap";
 
 const C = {
-  bg: "#F2F1EC",          // ivory record paper
+  bg: "#F3F2EC",          // ivory record paper
   surface: "#FFFFFF",
-  ink: "#21201B",         // warm near-black body
-  navy: "#1B2A44",        // brand / headings
-  mid: "#565349",
-  faint: "#6E6B61",       // fixed: >=4.5:1 on white and ivory
-  line: "#DAD7CD",
-  lineStrong: "#AFAB9D",
-  blue: "#1F4E9C",        // single action color
+  ink: "#1E1D18",         // warm near-black body
+  navy: "#182A47",        // brand / headings / masthead / accents
+  mid: "#4F4C43",         // darkened for older eyes
+  faint: "#66634F",       // >=4.5:1 on white and ivory
+  line: "#D8D5CA",
+  lineStrong: "#A9A597",
+  blue: "#1F4E9C",        // single action color, conventional link blue
   blueBg: "#EDF1F8",
   brick: "#A03123",       // Action Required
   brickBg: "#F7EAE7",
@@ -44,21 +36,21 @@ const SERIF = "'Source Serif 4', Georgia, serif";
 const SANS = "'Public Sans', system-ui, sans-serif";
 
 /* ---------- flat shield mark, no gradient ---------- */
-const ShieldLogo = ({ size = 24, tone = C.navy }) => (
+const ShieldLogo = ({ size = 24, tone = C.navy, check = "#FFF" }: any) => (
   <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden>
     <path d="M32 4L8 15V29C8 43.4 18.4 55.6 32 60C45.6 55.6 56 43.4 56 29V15L32 4Z" fill={tone} />
-    <path d="M22 31L29 38L43 23" stroke="#FFF" strokeWidth="4" strokeLinecap="square" strokeLinejoin="miter" />
+    <path d="M22 31L29 38L43 23" stroke={check} strokeWidth="4" strokeLinecap="square" strokeLinejoin="miter" />
   </svg>
 );
 
 /* ---------- small primitives ---------- */
-const Caps = ({ children, color = C.faint, size = 12, weight = 700, style }) => (
+const Caps = ({ children, color = C.faint, size = 12, weight = 700, style }: any) => (
   <span style={{ fontFamily: SANS, fontSize: size, fontWeight: weight, letterSpacing: ".09em", textTransform: "uppercase", color, ...style }}>
     {children}
   </span>
 );
 
-const Stamp = ({ children, tone = C.forest }) => (
+const Stamp = ({ children, tone = C.forest }: any) => (
   <span
     style={{
       display: "inline-block",
@@ -78,14 +70,14 @@ const Stamp = ({ children, tone = C.forest }) => (
   </span>
 );
 
-const Notice = ({ children }) => (
-  <div style={{ borderLeft: `3px solid ${C.lineStrong}`, padding: "10px 14px", background: C.surface, marginTop: 16 }}>
-    <Caps>Notice</Caps>
-    <p style={{ fontFamily: SANS, fontSize: 14, color: C.mid, margin: "5px 0 0", lineHeight: 1.6 }}>{children}</p>
+const Notice = ({ children }: any) => (
+  <div style={{ borderLeft: `3px solid ${C.lineStrong}`, padding: "12px 16px", background: C.surface, marginTop: 16 }}>
+    <Caps color={C.navy}>Notice</Caps>
+    <p style={{ fontFamily: SANS, fontSize: 14.5, color: C.mid, margin: "5px 0 0", lineHeight: 1.65 }}>{children}</p>
   </div>
 );
 
-const FadeIn = ({ children, delay = 0 }) => {
+const FadeIn = ({ children, delay = 0 }: any) => {
   const [v, setV] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setV(true), delay);
@@ -98,13 +90,13 @@ const FadeIn = ({ children, delay = 0 }) => {
   );
 };
 
-const Btn = ({ children, onClick, variant = "primary", style }) => {
+const Btn = ({ children, onClick, variant = "primary", style }: any) => {
   const base = {
     fontFamily: SANS,
-    fontSize: 15.5,
-    fontWeight: 600,
-    padding: "14px 26px",
-    borderRadius: 3,
+    fontSize: 16,
+    fontWeight: 700,
+    padding: "15px 28px",
+    borderRadius: 2,
     cursor: "pointer",
     transition: "background .15s ease, border-color .15s ease",
   };
@@ -113,7 +105,7 @@ const Btn = ({ children, onClick, variant = "primary", style }) => {
       ? { background: C.navy, color: "#FFF", border: `1px solid ${C.navy}` }
       : variant === "blue"
       ? { background: C.blue, color: "#FFF", border: `1px solid ${C.blue}` }
-      : { background: "transparent", color: C.navy, border: `1px solid ${C.lineStrong}` };
+      : { background: C.surface, color: C.navy, border: `1.5px solid ${C.lineStrong}` };
   return (
     <button onClick={onClick} style={{ ...base, ...v, ...style }}>
       {children}
@@ -121,49 +113,85 @@ const Btn = ({ children, onClick, variant = "primary", style }) => {
   );
 };
 
-/* ============================================================
-   HEADER — flat, quiet chrome. No slogan in the workspace.
-   ============================================================ */
-const Header = ({ onHome }) => (
-  <div
-    style={{
-      background: C.surface,
-      borderBottom: `1px solid ${C.line}`,
-      padding: "0 32px",
-      height: 54,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      position: "sticky",
-      top: 0,
-      zIndex: 100,
-    }}
+/* Conventional underlined text link (as a button) */
+const TextLink = ({ children, onClick, size = 14.5, style }: any) => (
+  <button
+    onClick={onClick}
+    className="gv-link"
+    style={{ fontFamily: SANS, fontSize: size, fontWeight: 600, color: C.blue, background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3, ...style }}
   >
-    <button onClick={onHome} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", background: "none", border: "none", padding: 0 }}>
-      <ShieldLogo size={22} />
-      <span style={{ fontFamily: SANS, fontSize: 16.5, fontWeight: 800, color: C.navy, letterSpacing: ".14em" }}>GOVIRA</span>
-    </button>
-    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-      <Caps color={C.mid} size={12.5} weight={600} style={{ letterSpacing: ".04em", textTransform: "none" }}>
-        Bethany Police Department
-      </Caps>
-      <div
-        style={{
-          width: 30,
-          height: 30,
-          borderRadius: 3,
-          background: C.navy,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: SANS,
-          fontSize: 12.5,
-          fontWeight: 700,
-          color: "#FFF",
-          letterSpacing: ".04em",
-        }}
-      >
-        JM
+    {children}
+  </button>
+);
+
+/* Small "1 of 2" chip so multi-item groups read at a glance */
+const IndexChip = ({ i, total }: any) =>
+  total > 1 ? (
+    <span
+      style={{
+        display: "inline-block",
+        fontFamily: SANS,
+        fontSize: 11,
+        fontWeight: 800,
+        letterSpacing: ".07em",
+        textTransform: "uppercase",
+        color: C.navy,
+        border: `1.5px solid ${C.lineStrong}`,
+        background: C.bg,
+        borderRadius: 2,
+        padding: "2px 8px",
+        marginRight: 10,
+        whiteSpace: "nowrap",
+        verticalAlign: "2px",
+      }}
+    >
+      {i + 1} of {total}
+    </span>
+  ) : null;
+
+/* ============================================================
+   MASTHEAD — plain navy band. The trust signal.
+   ============================================================ */
+const Header = ({ onHome }: any) => (
+  <div style={{ position: "sticky", top: 0, zIndex: 100 }}>
+    <div
+      style={{
+        background: C.navy,
+        boxShadow: "0 1px 0 rgba(0,0,0,.25)",
+        padding: "0 32px",
+        height: 62,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <button onClick={onHome} style={{ display: "flex", alignItems: "center", gap: 11, cursor: "pointer", background: "none", border: "none", padding: 0 }}>
+        <ShieldLogo size={26} tone="#FFF" check={C.navy} />
+        <span style={{ fontFamily: SERIF, fontSize: 21, fontWeight: 700, color: "#FFF", letterSpacing: ".13em" }}>GOVIRA</span>
+      </button>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,.85)" }}>
+          Bethany Police Department
+        </span>
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 2,
+            background: "rgba(255,255,255,.1)",
+            border: "1px solid rgba(255,255,255,.45)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: SANS,
+            fontSize: 13,
+            fontWeight: 700,
+            color: "#FFF",
+            letterSpacing: ".04em",
+          }}
+        >
+          JM
+        </div>
       </div>
     </div>
   </div>
@@ -172,43 +200,43 @@ const Header = ({ onHome }) => (
 /* ============================================================
    REDLINE — legislative convention: struck = removed, underline = added
    ============================================================ */
-const Removed = ({ children }) => (
+const Removed = ({ children }: any) => (
   <span style={{ color: C.brick, textDecoration: "line-through", textDecorationThickness: 1.5 }}>{children}</span>
 );
-const Added = ({ children }) => (
+const Added = ({ children }: any) => (
   <span style={{ color: C.forest, textDecoration: "underline", textUnderlineOffset: 3, textDecorationThickness: 1.5, background: "rgba(46,94,63,.07)" }}>
     {children}
   </span>
 );
 
-const Redline = ({ prior, amended, citeLabel, priorLabel = "Prior law", amendedLabel = "As amended", changeLabel = "What changed in the law" }) => (
+const Redline = ({ prior, amended, citeLabel, priorLabel = "Prior law", amendedLabel = "As amended", changeLabel = "What changed in the law" }: any) => (
   <div style={{ background: C.surface, border: `1px solid ${C.line}`, marginTop: 16 }}>
-    <div style={{ padding: "10px 18px", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+    <div style={{ padding: "11px 18px", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
       <Caps color={C.navy}>{changeLabel}</Caps>
       <div style={{ display: "flex", gap: 16 }}>
-        <Caps size={11.5}><Removed>struck</Removed>&nbsp; removed</Caps>
-        <Caps size={11.5}><Added>underlined</Added>&nbsp; added</Caps>
+        <Caps size={12}><Removed>struck</Removed>&nbsp; removed</Caps>
+        <Caps size={12}><Added>underlined</Added>&nbsp; added</Caps>
       </div>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: 0 }}>
       <div style={{ padding: "18px 0 18px 18px", borderRight: `1px solid ${C.line}` }}>
-        <Caps size={11.5}>{priorLabel}</Caps>
+        <Caps size={12}>{priorLabel}</Caps>
       </div>
       <div style={{ padding: "16px 20px 18px" }}>
-        <p style={{ fontFamily: SERIF, fontSize: 16.5, lineHeight: 1.8, color: C.ink, margin: 0 }}>{prior}</p>
+        <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.8, color: C.ink, margin: 0 }}>{prior}</p>
       </div>
       <div style={{ padding: "18px 0 18px 18px", borderRight: `1px solid ${C.line}`, borderTop: `1px solid ${C.line}` }}>
-        <Caps size={11.5} color={C.navy}>{amendedLabel}</Caps>
+        <Caps size={12} color={C.navy}>{amendedLabel}</Caps>
         <div style={{ marginTop: 4 }}>
-          <Caps size={11.5}>{citeLabel}</Caps>
+          <Caps size={12}>{citeLabel}</Caps>
         </div>
       </div>
       <div style={{ padding: "16px 20px 18px", borderTop: `1px solid ${C.line}` }}>
-        <p style={{ fontFamily: SERIF, fontSize: 16.5, lineHeight: 1.8, color: C.ink, margin: 0 }}>{amended}</p>
+        <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.8, color: C.ink, margin: 0 }}>{amended}</p>
       </div>
     </div>
     <div style={{ padding: "9px 18px", borderTop: `1px solid ${C.line}`, background: C.bg }}>
-      <p style={{ fontFamily: SANS, fontSize: 12, color: C.faint, margin: 0, lineHeight: 1.5 }}>
+      <p style={{ fontFamily: SANS, fontSize: 12.5, color: C.faint, margin: 0, lineHeight: 1.5 }}>
         Source comparison shown for orientation. Official source text controls; confirm before acting.
       </p>
     </div>
@@ -218,27 +246,27 @@ const Redline = ({ prior, amended, citeLabel, priorLabel = "Prior law", amendedL
 /* ============================================================
    DOCKET HEADER + REVIEW RECORD (consolidated progress ledger)
    ============================================================ */
-const badgeTone = (badge) => (badge === "NEW LAW" ? C.brick : badge === "UPDATED LAW" || badge === "REVISED STANDARD" ? C.ochre : C.forest);
+const badgeTone = (badge: any) => (badge === "NEW LAW" ? C.brick : badge === "UPDATED LAW" || badge === "REVISED STANDARD" ? C.ochre : C.forest);
 
-const ReviewRecord = ({ rows, complete }) => (
+const ReviewRecord = ({ rows, complete }: any) => (
   <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 18, paddingTop: 14 }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
       <Caps color={C.navy}>Progress</Caps>
       {complete && <Stamp>Review complete</Stamp>}
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
-      {rows.map((r) => {
+      {rows.map((r: any) => {
         const pct = r.total ? Math.round((r.done / r.total) * 100) : 0;
         const full = r.total > 0 && r.done === r.total;
         return (
           <div key={r.label}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
-              <Caps size={11.5}>{r.label}</Caps>
-              <span style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 700, color: full ? C.forest : C.navy, fontVariantNumeric: "tabular-nums" }}>
+              <Caps size={12}>{r.label}</Caps>
+              <span style={{ fontFamily: SANS, fontSize: 16, fontWeight: 700, color: full ? C.forest : C.navy, fontVariantNumeric: "tabular-nums" }}>
                 {r.done}/{r.total}
               </span>
             </div>
-            <div style={{ height: 6, background: C.bg, border: `1px solid ${C.line}` }}>
+            <div style={{ height: 7, background: C.bg, border: `1px solid ${C.line}` }}>
               <div style={{ width: `${pct}%`, height: "100%", background: full ? C.forest : C.navy, transition: "width .3s ease" }} />
             </div>
           </div>
@@ -257,7 +285,7 @@ const DECISIONS = [
 ];
 const LATER = { key: "later", label: "Save for later", color: C.blue, bg: C.blueBg };
 
-const DecisionGroup = ({ value, onChange, allowLater }) => {
+const DecisionGroup = ({ value, onChange, allowLater }: any) => {
   const opts = allowLater ? [...DECISIONS, LATER] : DECISIONS;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
@@ -265,7 +293,7 @@ const DecisionGroup = ({ value, onChange, allowLater }) => {
         const on = value === d.key;
         return (
           <button key={d.key} onClick={() => onChange(on ? null : d.key)} aria-pressed={on}
-            style={{ fontFamily: SANS, fontSize: 12, fontWeight: 700, letterSpacing: ".04em", padding: "6px 12px", borderRadius: 3, cursor: "pointer", border: `1px solid ${on ? d.color : C.line}`, background: on ? d.bg : C.surface, color: on ? d.color : C.mid, transition: "all .13s" }}>
+            style={{ fontFamily: SANS, fontSize: 13, fontWeight: 700, letterSpacing: ".03em", padding: "8px 14px", borderRadius: 2, cursor: "pointer", border: `1.5px solid ${on ? d.color : C.lineStrong}`, background: on ? d.bg : C.surface, color: on ? d.color : C.mid, transition: "all .13s" }}>
             {d.label}
           </button>
         );
@@ -274,16 +302,18 @@ const DecisionGroup = ({ value, onChange, allowLater }) => {
   );
 };
 
-const Collapsible = ({ label, children }) => {
+const Collapsible = ({ label, children }: any) => {
   const [open, setOpen] = useState(false);
   return (
     <div style={{ border: `1px solid ${C.line}`, background: C.surface, marginTop: 16 }}>
       <button
         onClick={() => setOpen((o) => !o)}
-        style={{ width: "100%", background: "none", border: "none", padding: "12px 16px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}
+        style={{ width: "100%", background: "none", border: "none", padding: "13px 16px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}
       >
-        <Caps color={C.blue}>{open ? "Hide" : "Show"} {label}</Caps>
-        <span style={{ color: C.faint, fontSize: 12.5, transform: open ? "rotate(90deg)" : "none", transition: "transform .15s", display: "inline-block" }}>▶</span>
+        <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, color: C.blue, textDecoration: "underline", textUnderlineOffset: 3 }}>
+          {open ? "Hide" : "Show"} {label}
+        </span>
+        <span style={{ color: C.faint, fontSize: 13, transform: open ? "rotate(90deg)" : "none", transition: "transform .15s", display: "inline-block" }}>▶</span>
       </button>
       {open && <div style={{ padding: "0 16px 16px" }}>{children}</div>}
     </div>
@@ -301,11 +331,11 @@ const RAIL = [
   { id: "sec-plan", label: "Summary" },
 ];
 
-const SectionRail = ({ active }) => {
-  const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+const SectionRail = ({ active }: any) => {
+  const go = (id: any) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   return (
     <nav aria-label="Docket sections" className="gv-rail">
-      <Caps size={11.5}>Contents</Caps>
+      <Caps size={12}>Contents</Caps>
       <div style={{ marginTop: 10, borderLeft: `1px solid ${C.line}` }}>
         {RAIL.map((r, i) => {
           const on = active === r.id;
@@ -321,14 +351,14 @@ const SectionRail = ({ active }) => {
                 textAlign: "left",
                 background: "none",
                 border: "none",
-                borderLeft: `2px solid ${on ? C.navy : "transparent"}`,
+                borderLeft: `3px solid ${on ? C.navy : "transparent"}`,
                 marginLeft: -1,
-                padding: "7px 0 7px 12px",
+                padding: "8px 0 8px 12px",
                 cursor: "pointer",
               }}
             >
-              <span style={{ fontFamily: SANS, fontSize: 11.5, fontWeight: 700, color: on ? C.navy : C.faint, fontVariantNumeric: "tabular-nums" }}>{i + 1}.</span>
-              <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: on ? 700 : 500, color: on ? C.navy : C.mid }}>{r.label}</span>
+              <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 700, color: on ? C.navy : C.faint, fontVariantNumeric: "tabular-nums" }}>{i + 1}.</span>
+              <span style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: on ? 700 : 500, color: on ? C.navy : C.mid }}>{r.label}</span>
             </button>
           );
         })}
@@ -340,26 +370,28 @@ const SectionRail = ({ active }) => {
 /* ============================================================
    DOCKET DETAIL
    ============================================================ */
-const SectionHead = ({ n, title, benefit, id }) => (
-  <div id={id} style={{ borderTop: `2px solid ${C.navy}`, marginTop: 44, paddingTop: 16, scrollMarginTop: 70 }}>
+const SectionHead = ({ n, title, benefit, id }: any) => (
+  <div id={id} style={{ borderTop: `2px solid ${C.navy}`, marginTop: 44, paddingTop: 16, scrollMarginTop: 78 }}>
     <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-      <span style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 800, color: C.navy, fontVariantNumeric: "tabular-nums" }}>{n}.</span>
-      <h3 style={{ fontFamily: SANS, fontSize: 21, fontWeight: 800, color: C.navy, margin: 0, letterSpacing: "-.01em" }}>{title}</h3>
+      <span style={{ fontFamily: SERIF, fontSize: 19, fontWeight: 700, color: C.navy, fontVariantNumeric: "tabular-nums" }}>{n}.</span>
+      <h3 style={{ fontFamily: SERIF, fontSize: 24, fontWeight: 700, color: C.navy, margin: 0, letterSpacing: "-.005em" }}>{title}</h3>
     </div>
-    <p style={{ fontFamily: SANS, fontSize: 14.5, color: C.mid, margin: "6px 0 18px 24px", lineHeight: 1.55 }}>{benefit}</p>
+    <p style={{ fontFamily: SANS, fontSize: 15, color: C.mid, margin: "6px 0 18px 30px", lineHeight: 1.6 }}>{benefit}</p>
   </div>
 );
 
-const GroupHeader = ({ children, sub }) => (
-  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, flexWrap: "wrap", padding: "11px 18px", background: C.navy }}>
+const GroupHeader = ({ children, count, unit }: any) => (
+  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap", padding: "11px 18px", background: C.navy }}>
     <span style={{ fontFamily: SANS, fontSize: 13, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", color: "#FFF" }}>{children}</span>
-    {sub && <span style={{ fontFamily: SANS, fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>{sub}</span>}
+    <span style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", color: C.navy, background: "#FFF", borderRadius: 2, padding: "3px 10px", whiteSpace: "nowrap" }}>
+      {count} {unit}{count === 1 ? "" : "s"}
+    </span>
   </div>
 );
 
-const groupBy = (items, keyFn) => {
+const groupBy = (items: any, keyFn: any) => {
   const map = new Map();
-  items.forEach((it, i) => {
+  items.forEach((it: any, i: any) => {
     const k = keyFn(it) || "Other";
     if (!map.has(k)) map.set(k, []);
     map.get(k).push({ ...it, _i: i });
@@ -367,45 +399,49 @@ const groupBy = (items, keyFn) => {
   return [...map.entries()];
 };
 
-const PointerRow = ({ k, v }) => (
-  <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", gap: 14, padding: "9px 0", borderTop: `1px solid ${C.line}` }}>
-    <Caps size={11} color={C.navy}>{k}</Caps>
-    <span style={{ fontFamily: SANS, fontSize: 14.5, color: C.ink, lineHeight: 1.6 }}>{v}</span>
+const PointerRow = ({ k, v }: any) => (
+  <div style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 14, padding: "9px 0", borderTop: `1px solid ${C.line}` }}>
+    <Caps size={11.5} color={C.navy}>{k}</Caps>
+    <span style={{ fontFamily: SANS, fontSize: 15, color: C.ink, lineHeight: 1.6 }}>{v}</span>
   </div>
 );
 
-const EvidenceRow = ({ decision, onDecide, example, meta, allowLater }) => (
-  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 14, flexWrap: "wrap", padding: "13px 16px", borderTop: `1px solid ${C.line}`, background: decision === "later" ? C.blueBg : "transparent", opacity: decision === "na" || decision === "done" ? 0.55 : 1, transition: "background .15s, opacity .15s" }}>
-    <div style={{ flex: 1, minWidth: 260 }}>
-      <p style={{ fontFamily: SANS, fontSize: 15, color: C.ink, margin: "0 0 4px", lineHeight: 1.55, textDecoration: decision === "na" ? "line-through" : "none", fontWeight: decision ? 400 : 500 }}>
-        {example}
-      </p>
-      <Caps size={11} weight={600} style={{ letterSpacing: ".03em", textTransform: "none" }}>{meta}</Caps>
+/* Completed rows: paper background + full-contrast text (no opacity dimming) */
+const EvidenceRow = ({ decision, onDecide, example, meta, allowLater, idx, total }: any) => {
+  const settled = decision === "na" || decision === "done";
+  return (
+    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 14, flexWrap: "wrap", padding: "14px 16px", borderTop: `1px solid ${C.line}`, background: decision === "later" ? C.blueBg : settled ? C.bg : "transparent", transition: "background .15s" }}>
+      <div style={{ flex: 1, minWidth: 260 }}>
+        <p style={{ fontFamily: SANS, fontSize: 15.5, color: settled ? C.mid : C.ink, margin: "0 0 4px", lineHeight: 1.55, textDecoration: decision === "na" ? "line-through" : "none", fontWeight: decision ? 400 : 500 }}>
+          <IndexChip i={idx} total={total} />
+          {example}
+        </p>
+        <Caps size={12} weight={600} style={{ letterSpacing: ".03em", textTransform: "none" }}>{meta}</Caps>
+      </div>
+      <DecisionGroup value={decision} onChange={onDecide} allowLater={allowLater} />
     </div>
-    <DecisionGroup value={decision} onChange={onDecide} allowLater={allowLater} />
-  </div>
-);
+  );
+};
 
-const LawDetail = ({ data, onBack }) => {
-  const [decisions, setDecisions] = useState(data.actions.map(() => null));
-  const setDecision = (i, key) => setDecisions((prev) => prev.map((d, idx) => (idx === i ? key : d)));
+const LawDetail = ({ data, onBack }: any) => {
+  const [decisions, setDecisions] = useState<any[]>(data.actions.map(() => null));
+  const setDecision = (i: any, key: any) => setDecisions((prev) => prev.map((d, idx) => (idx === i ? key : d)));
 
-  const doList = data.actions.filter((a) => a.action).map((a) => ({ tag: a.tag, section: a.section, text: a.action, cat: a.cat }));
-  const [doDecisions, setDoDecisions] = useState(doList.map(() => null));
-  const setDoDecision = (k, v) => setDoDecisions((p) => p.map((c, i) => (i === k ? v : c)));
+  const doList = data.actions.filter((a: any) => a.action).map((a: any) => ({ tag: a.tag, section: a.section, text: a.action, cat: a.cat }));
+  const [doDecisions, setDoDecisions] = useState<any[]>(doList.map(() => null));
+  const setDoDecision = (k: any, v: any) => setDoDecisions((p) => p.map((c, i) => (i === k ? v : c)));
 
-  const proofList = [];
-  data.actions.forEach((a) => { if (a.proofs) a.proofs.forEach((pr) => proofList.push({ tag: a.tag, section: a.section, type: pr.type, example: pr.example })); });
-  const [prDecisions, setPrDecisions] = useState(proofList.map(() => null));
-  const setPrDecision = (k, v) => setPrDecisions((p) => p.map((c, i) => (i === k ? v : c)));
+  const proofList: any[] = [];
+  data.actions.forEach((a: any) => { if (a.proofs) a.proofs.forEach((pr: any) => proofList.push({ tag: a.tag, section: a.section, type: pr.type, example: pr.example })); });
+  const [prDecisions, setPrDecisions] = useState<any[]>(proofList.map(() => null));
+  const setPrDecision = (k: any, v: any) => setPrDecisions((p) => p.map((c, i) => (i === k ? v : c)));
 
   const [markedComplete, setMarkedComplete] = useState(false);
-  const allTriagedCheck = (r) => r.total === 0 || r.done === r.total;
 
   const all = [
-    ...data.actions.map((a, i) => ({ kind: "Review", label: a.where || a.requirement, dec: decisions[i] })),
-    ...doList.map((op, i) => ({ kind: "Do", label: op.text, dec: doDecisions[i] })),
-    ...proofList.map((pr, i) => ({ kind: "Proof", label: `${pr.type} · ${pr.example}`, dec: prDecisions[i] })),
+    ...data.actions.map((a: any, i: any) => ({ kind: "Review", label: a.where || a.requirement, dec: decisions[i] })),
+    ...doList.map((op: any, i: any) => ({ kind: "Do", label: op.text, dec: doDecisions[i] })),
+    ...proofList.map((pr: any, i: any) => ({ kind: "Proof", label: `${pr.type} · ${pr.example}`, dec: prDecisions[i] })),
   ];
   const attention = all.filter((x) => x.dec === null);
   const addressed = all.filter((x) => x.dec === "done");
@@ -417,8 +453,6 @@ const LawDetail = ({ data, onBack }) => {
     { label: "Department actions", done: doDecisions.filter((d) => d !== null).length, total: doList.length },
     { label: "Proofs", done: prDecisions.filter((d) => d !== null).length, total: proofList.length },
   ];
-
-  const allTriaged = rows.every(allTriagedCheck);
 
   const [active, setActive] = useState("sec-understand");
   useEffect(() => {
@@ -435,13 +469,13 @@ const LawDetail = ({ data, onBack }) => {
   return (
     <div style={{ maxWidth: 1080, margin: "0 auto", padding: "32px 32px 72px" }}>
       <FadeIn>
-        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, marginBottom: 18 }}>
-          <Caps color={C.blue}>← All updates</Caps>
-        </button>
+        <div style={{ marginBottom: 18 }}>
+          <TextLink onClick={onBack}>← All updates</TextLink>
+        </div>
       </FadeIn>
 
-      <div className="gv-detail" style={{ display: "grid", gridTemplateColumns: "170px 1fr", gap: 40, alignItems: "start" }}>
-        <div className="gv-railwrap" style={{ position: "sticky", top: 78 }}>
+      <div className="gv-detail" style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 40, alignItems: "start" }}>
+        <div className="gv-railwrap" style={{ position: "sticky", top: 86 }}>
           <SectionRail active={active} />
         </div>
 
@@ -450,90 +484,89 @@ const LawDetail = ({ data, onBack }) => {
           <FadeIn>
             <div style={{ background: C.surface, border: `1px solid ${C.lineStrong}`, borderTop: `4px solid ${tone}`, padding: "22px 26px 22px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
                   <div>
-                    <Caps size={11.5}>Status</Caps>
+                    <Caps size={12}>Status</Caps>
                     <div style={{ marginTop: 4 }}><Caps color={tone} size={13} weight={800}>{data.badge}</Caps></div>
                   </div>
                   <div>
-                    <Caps size={11.5}>Authority</Caps>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: C.mid, marginTop: 4 }}>{data.authority}</div>
+                    <Caps size={12}>Authority</Caps>
+                    <div style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 600, color: C.mid, marginTop: 4 }}>{data.authority}</div>
                   </div>
                   <div>
-                    <Caps size={11.5}>Citation</Caps>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, color: C.navy, marginTop: 4 }}>{data.citation}</div>
+                    <Caps size={12}>Citation</Caps>
+                    <div style={{ fontFamily: SERIF, fontSize: 15.5, fontWeight: 700, color: C.navy, marginTop: 3 }}>{data.citation}</div>
                   </div>
                   <div>
-                    <Caps size={11.5}>May apply to</Caps>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: C.mid, marginTop: 4 }}>{data.appliesTo}</div>
+                    <Caps size={12}>May apply to</Caps>
+                    <div style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 600, color: C.mid, marginTop: 4 }}>{data.appliesTo}</div>
                   </div>
                   <div>
-                    <Caps size={11.5}>Effective</Caps>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, color: C.brick, marginTop: 4 }}>{data.effective}</div>
+                    <Caps size={12}>Effective</Caps>
+                    <div style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 700, color: C.brick, marginTop: 4 }}>{data.effective}</div>
                   </div>
                 </div>
                 {markedComplete && <Stamp>Review complete</Stamp>}
               </div>
-              <h2 style={{ fontFamily: SANS, fontSize: 30, fontWeight: 800, color: C.navy, margin: "16px 0 8px", letterSpacing: "-.015em", lineHeight: 1.2 }}>{data.title}</h2>
-              <p style={{ fontFamily: SANS, fontSize: 16, color: C.ink, margin: 0, lineHeight: 1.65, maxWidth: 640 }}>{data.summary}</p>
+              <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 700, color: C.navy, margin: "16px 0 8px", letterSpacing: "-.005em", lineHeight: 1.18 }}>{data.title}</h2>
+              <p style={{ fontFamily: SANS, fontSize: 16.5, color: C.ink, margin: 0, lineHeight: 1.65, maxWidth: 640 }}>{data.summary}</p>
               <ReviewRecord rows={rows} complete={markedComplete} />
             </div>
           </FadeIn>
 
           {/* 1. UNDERSTAND */}
-          <div id="sec-understand" style={{ scrollMarginTop: 70 }}>
+          <div id="sec-understand" style={{ scrollMarginTop: 78 }}>
             <SectionHead n="1" title="Understand the change" benefit="The external side: what the authority did, in its own words, with the source one click away. Nothing here is about your department yet." />
             <div style={{ background: C.surface, border: `1px solid ${C.line}`, padding: "18px 22px" }}>
-              <Caps size={11} color={C.navy}>Why this is on your desk</Caps>
-              <p style={{ fontFamily: SANS, fontSize: 16, color: C.ink, margin: "8px 0 0", lineHeight: 1.7 }}>{data.interpretation}</p>
+              <Caps size={11.5} color={C.navy}>Why this is on your desk</Caps>
+              <p style={{ fontFamily: SANS, fontSize: 16.5, color: C.ink, margin: "8px 0 0", lineHeight: 1.7 }}>{data.interpretation}</p>
             </div>
             <Redline prior={data.redline.prior} amended={data.redline.amended} citeLabel={data.redline.cite} priorLabel={data.redline.priorLabel} amendedLabel={data.redline.amendedLabel} changeLabel={data.redline.changeLabel} />
-            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
-              <Caps size={11}>Official record</Caps>
-              {(data.recordLinks || ["Act text", "OLR summary", "Bill status"]).map((l) => (
-                <button key={l} style={{ fontFamily: SANS, fontSize: 13, fontWeight: 700, color: C.blue, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 3, padding: "5px 12px", cursor: "pointer" }}>
-                  {l} ↗
-                </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", marginTop: 14 }}>
+              <Caps size={11.5}>Official record</Caps>
+              {(data.recordLinks || ["Act text", "OLR summary", "Bill status"]).map((l: any) => (
+                <TextLink key={l} size={14}>{l} ↗</TextLink>
               ))}
             </div>
             <Collapsible label="the exact source text">
-              <Caps size={11}>{data.source.cite}</Caps>
-              <p style={{ fontFamily: SERIF, fontSize: 16.5, color: C.ink, lineHeight: 1.85, margin: "10px 0 0", borderLeft: `3px solid ${C.navy}`, paddingLeft: 16 }}>{data.source.quote}</p>
-              <p style={{ fontFamily: SANS, fontSize: 12.5, color: C.faint, margin: "10px 0 0" }}>{data.source.attribution}</p>
+              <Caps size={11.5}>{data.source.cite}</Caps>
+              <p style={{ fontFamily: SERIF, fontSize: 17, color: C.ink, lineHeight: 1.85, margin: "10px 0 0", borderLeft: `3px solid ${C.navy}`, paddingLeft: 16 }}>{data.source.quote}</p>
+              <p style={{ fontFamily: SANS, fontSize: 13, color: C.faint, margin: "10px 0 0" }}>{data.source.attribution}</p>
             </Collapsible>
           </div>
 
-          {/* 2. WHAT TO REVIEW */}
-          <div id="sec-review" style={{ scrollMarginTop: 70 }}>
-            <SectionHead n="2" title="What to review" benefit="The internal side: what the change above may mean inside your department, grouped by where you’ll go in PowerDMS. Locations follow the POSTC Law Enforcement Accreditation Standards Manual, 6th Edition; mappings are drafts pending SME review." />
+          {/* 2. WHAT MAY WARRANT REVIEW */}
+          <div id="sec-review" style={{ scrollMarginTop: 78 }}>
+            <SectionHead n="2" title="What to review" benefit="The internal side: what the change above may mean inside your department, grouped by where you’d go in PowerDMS. Locations follow the POSTC Law Enforcement Accreditation Standards Manual, 6th Edition." />
             {data.actions.length === 0 && (
               <div style={{ background: C.surface, border: `1px solid ${C.line}`, padding: "20px 22px" }}>
-                <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 700, color: C.navy, margin: 0 }}>No policy review identified for this change.</p>
+                <p style={{ fontFamily: SANS, fontSize: 15.5, fontWeight: 700, color: C.navy, margin: 0 }}>No policy review identified for this change.</p>
               </div>
             )}
-            {groupBy(data.actions, (a) => a.dms).map(([loc, items]) => (
+            {groupBy(data.actions, (a: any) => a.dms).map(([loc, items]: any) => (
               <div key={loc} style={{ border: `1px solid ${C.lineStrong}`, marginBottom: 16, background: C.surface }}>
-                <GroupHeader sub={`${items.length} item${items.length === 1 ? "" : "s"}`}>{loc}</GroupHeader>
-                {items.map((a) => {
+                <GroupHeader count={items.length} unit="item">{loc}</GroupHeader>
+                {items.map((a: any, idx: any) => {
                   const dec = decisions[a._i];
-                  const dim = dec === "na" || dec === "done";
+                  const settled = dec === "na" || dec === "done";
                   return (
-                    <div key={a._i} style={{ borderTop: `1px solid ${C.line}`, padding: "15px 18px 8px", opacity: dim ? 0.55 : 1, transition: "opacity .2s" }}>
+                    <div key={a._i} style={{ borderTop: `1px solid ${C.line}`, padding: "15px 18px 10px", background: settled ? C.bg : "transparent", transition: "background .2s" }}>
                       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
-                        <p style={{ fontFamily: SANS, fontSize: 16, fontWeight: 600, color: C.ink, margin: 0, lineHeight: 1.55, flex: 1, minWidth: 260, textDecoration: dec === "na" ? "line-through" : "none" }}>
-                          <span style={{ fontFamily: SANS, fontSize: 13, fontWeight: 800, color: C.navy, marginRight: 10 }}>{a.section}</span>
+                        <p style={{ fontFamily: SANS, fontSize: 16.5, fontWeight: 600, color: settled ? C.mid : C.ink, margin: 0, lineHeight: 1.55, flex: 1, minWidth: 260, textDecoration: dec === "na" ? "line-through" : "none" }}>
+                          <IndexChip i={idx} total={items.length} />
+                          <span style={{ fontFamily: SERIF, fontSize: 14.5, fontWeight: 700, color: C.navy, marginRight: 10 }}>{a.section}</span>
                           {a.requirement}
                         </p>
-                        <DecisionGroup value={dec} onChange={(k) => setDecision(a._i, k)} />
+                        <DecisionGroup value={dec} onChange={(k: any) => setDecision(a._i, k)} />
                       </div>
                       {a.where ? (
                         <div style={{ margin: "10px 0 8px" }}>
-                          <PointerRow k="What to review" v={a.review} />
+                          <PointerRow k="Suggested review" v={a.review} />
                           <PointerRow k="Why" v={a.why} />
-                          <PointerRow k="Department documents" v={a.where} />
+                          <PointerRow k="Where this may live" v={a.where} />
                         </div>
                       ) : (
-                        <p style={{ fontFamily: SANS, fontSize: 14, color: C.mid, margin: "8px 0 10px", lineHeight: 1.6 }}>Awareness item: no document review identified. {a.why}</p>
+                        <p style={{ fontFamily: SANS, fontSize: 14.5, color: C.mid, margin: "8px 0 10px", lineHeight: 1.6 }}>Awareness item: no document review identified. {a.why}</p>
                       )}
                     </div>
                   );
@@ -543,28 +576,28 @@ const LawDetail = ({ data, onBack }) => {
             <Notice>Govira points to what may warrant review. It does not draft or replace policy language. Reviews run through your department's normal policy process.</Notice>
           </div>
 
-          {/* 3. WHAT TO DO */}
-          <div id="sec-do" style={{ scrollMarginTop: 70 }}>
-            <SectionHead n="3" title="What to do" benefit="Practical steps beyond documents, grouped by type. Clear what’s handled or doesn’t apply." />
-            {groupBy(doList, (op) => op.cat).map(([cat, items]) => (
+          {/* 3. STEPS TO CONSIDER */}
+          <div id="sec-do" style={{ scrollMarginTop: 78 }}>
+            <SectionHead n="3" title="What to do" benefit="Practical steps departments often take beyond documents, grouped by type. Mark what’s handled or doesn’t apply." />
+            {groupBy(doList, (op: any) => op.cat).map(([cat, items]: any) => (
               <div key={cat} style={{ border: `1px solid ${C.lineStrong}`, marginBottom: 16, background: C.surface }}>
-                <GroupHeader sub={`${items.length} step${items.length === 1 ? "" : "s"}`}>{cat}</GroupHeader>
-                {items.map((op) => (
-                  <EvidenceRow key={op._i} decision={doDecisions[op._i]} onDecide={(v) => setDoDecision(op._i, v)} example={op.text} meta={`Relates to ${op.tag} · ${op.section}`} />
+                <GroupHeader count={items.length} unit="step">{cat}</GroupHeader>
+                {items.map((op: any, idx: any) => (
+                  <EvidenceRow key={op._i} idx={idx} total={items.length} decision={doDecisions[op._i]} onDecide={(v: any) => setDoDecision(op._i, v)} example={op.text} meta={`Relates to ${op.tag} · ${op.section}`} />
                 ))}
               </div>
             ))}
             <Notice>These are practical steps departments often take to put a change into effect. Adapt them to how your department operates.</Notice>
           </div>
 
-          {/* 4. PROOFS TO PLAN */}
-          <div id="sec-proofs" style={{ scrollMarginTop: 70 }}>
-            <SectionHead n="4" title="Proofs to plan" benefit="Field records that show the requirement working in practice, not more documents. Save ideas for later if they’re not for now." />
-            {groupBy(proofList, (ev) => ev.type).map(([type, items]) => (
+          {/* 4. PROOFS TO CONSIDER */}
+          <div id="sec-proofs" style={{ scrollMarginTop: 78 }}>
+            <SectionHead n="4" title="Proofs to plan" benefit="Field records that show the requirement working in practice. Save ideas for later if they’re not for now." />
+            {groupBy(proofList, (ev: any) => ev.type).map(([type, items]: any) => (
               <div key={type} style={{ border: `1px solid ${C.lineStrong}`, marginBottom: 16, background: C.surface }}>
-                <GroupHeader sub={`${items.length} idea${items.length === 1 ? "" : "s"}`}>{type}</GroupHeader>
-                {items.map((ev) => (
-                  <EvidenceRow key={ev._i} decision={prDecisions[ev._i]} onDecide={(v) => setPrDecision(ev._i, v)} example={ev.example} meta={`Relates to ${ev.tag} · ${ev.section}`} allowLater />
+                <GroupHeader count={items.length} unit="idea">{type}</GroupHeader>
+                {items.map((ev: any, idx: any) => (
+                  <EvidenceRow key={ev._i} idx={idx} total={items.length} decision={prDecisions[ev._i]} onDecide={(v: any) => setPrDecision(ev._i, v)} example={ev.example} meta={`Relates to ${ev.tag} · ${ev.section}`} allowLater />
                 ))}
               </div>
             ))}
@@ -572,40 +605,40 @@ const LawDetail = ({ data, onBack }) => {
           </div>
 
           {/* 5. SUMMARY (auto-built from decisions) */}
-          <div id="sec-plan" style={{ scrollMarginTop: 70 }}>
+          <div id="sec-plan" style={{ scrollMarginTop: 78 }}>
             <SectionHead n="5" title="Summary" benefit="Built automatically as you work. The docket is your plan; this is the record of it." />
             <div style={{ background: C.surface, border: `1px solid ${C.lineStrong}`, borderTop: `4px solid ${C.navy}` }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap", padding: "14px 20px", borderBottom: `1px solid ${C.line}` }}>
                 <div>
-                  <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 800, color: attention.length === 0 ? C.forest : C.navy, letterSpacing: "-.01em", marginBottom: 3 }}>
+                  <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: attention.length === 0 ? C.forest : C.navy, letterSpacing: "-.005em", marginBottom: 3 }}>
                     {attention.length === 0 ? "Nothing left needing attention." : `${attention.length} item${attention.length === 1 ? "" : "s"} still need${attention.length === 1 ? "s" : ""} attention.`}
                   </div>
-                  <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: C.mid }}>
+                  <span style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 600, color: C.mid }}>
                     {addressed.length} addressed · {notApplicable.length} not applicable · {savedLater.length} saved for later
                   </span>
                 </div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <button style={{ fontFamily: SANS, fontSize: 13, fontWeight: 700, color: C.blue, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 3, padding: "10px 16px", cursor: "pointer" }}>
+                  <button style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, color: C.navy, background: C.surface, border: `1.5px solid ${C.lineStrong}`, borderRadius: 2, padding: "11px 18px", cursor: "pointer" }}>
                     Export summary
                   </button>
                   <button onClick={() => attention.length === 0 && setMarkedComplete((m) => !m)} disabled={attention.length > 0}
-                    style={{ fontFamily: SANS, fontSize: 13, fontWeight: 700, color: markedComplete ? C.forest : "#FFF", background: markedComplete ? C.forestBg : C.navy, border: `1px solid ${markedComplete ? C.forest : C.navy}`, borderRadius: 3, padding: "10px 16px", cursor: attention.length === 0 ? "pointer" : "not-allowed", opacity: attention.length === 0 ? 1 : 0.45 }}>
+                    style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, color: markedComplete ? C.forest : "#FFF", background: markedComplete ? C.forestBg : C.navy, border: `1.5px solid ${markedComplete ? C.forest : C.navy}`, borderRadius: 2, padding: "11px 18px", cursor: attention.length === 0 ? "pointer" : "not-allowed", opacity: attention.length === 0 ? 1 : 0.45 }}>
                     {attention.length > 0 ? "Resolve remaining items to complete" : markedComplete ? "✓ Marked complete · reopen" : "Mark review complete"}
                   </button>
                 </div>
               </div>
-              {[
+              {([
                 ["Still needs attention", attention, C.ochre],
                 ["Already addressed", addressed, C.forest],
                 ["Saved for later", savedLater, C.blue],
                 ["Not applicable", notApplicable, C.faint],
-              ].map(([label, items, tone]) =>
+              ] as [string, any[], string][]).map(([label, items, tone]) =>
                 items.length > 0 ? (
                   <div key={label} style={{ padding: "14px 20px", borderBottom: `1px solid ${C.line}` }}>
-                    <Caps size={11} color={tone} weight={800}>{label} · {items.length}</Caps>
+                    <Caps size={11.5} color={tone} weight={800}>{label} · {items.length}</Caps>
                     {items.map((it, i) => (
-                      <p key={i} style={{ fontFamily: SANS, fontSize: 14, color: C.ink, margin: "9px 0 0", lineHeight: 1.55 }}>
-                        <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: ".07em", textTransform: "uppercase", color: C.navy, border: `1px solid ${C.lineStrong}`, padding: "1px 6px", marginRight: 8, borderRadius: 2 }}>{it.kind}</span>
+                      <p key={i} style={{ fontFamily: SANS, fontSize: 14.5, color: C.ink, margin: "9px 0 0", lineHeight: 1.55 }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".07em", textTransform: "uppercase", color: C.navy, border: `1px solid ${C.lineStrong}`, padding: "1px 6px", marginRight: 8, borderRadius: 2 }}>{it.kind}</span>
                         {it.label}
                       </p>
                     ))}
@@ -622,9 +655,9 @@ const LawDetail = ({ data, onBack }) => {
 };
 
 /* ============================================================
-   DASHBOARD — docket list, cite-first rows
+   DASHBOARD — docket list, cite-first rows, visible open buttons
    ============================================================ */
-const DocketRow = ({ onClick, badge, title, summary, citation, authority, meta, reviewed, wstatus, delay }) => {
+const DocketRow = ({ onClick, badge, title, summary, citation, authority, meta, reviewed, delay }: any) => {
   const tone = badgeTone(badge);
   const [hover, setHover] = useState(false);
   return (
@@ -639,32 +672,37 @@ const DocketRow = ({ onClick, badge, title, summary, citation, authority, meta, 
           gap: 24,
           width: "100%",
           textAlign: "left",
-          background: hover ? C.surface : "transparent",
+          background: hover && !reviewed ? C.surface : "transparent",
           border: "none",
           borderTop: `1px solid ${C.lineStrong}`,
           padding: "22px 12px",
-          cursor: "pointer",
+          cursor: reviewed ? "default" : "pointer",
           alignItems: "start",
-          opacity: reviewed ? 0.75 : 1,
           transition: "background .15s",
         }}
       >
         <div>
-          <div style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 800, color: C.navy, lineHeight: 1.4 }}>{citation}</div>
-          <div style={{ fontFamily: SANS, fontSize: 12, fontWeight: 600, color: C.faint, marginTop: 3 }}>{authority}</div>
+          <div style={{ fontFamily: SERIF, fontSize: 16.5, fontWeight: 700, color: C.navy, lineHeight: 1.4 }}>{citation}</div>
+          <div style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 600, color: C.faint, marginTop: 3 }}>{authority}</div>
           <div style={{ marginTop: 6 }}>
             <Caps color={tone} size={12} weight={800}>{badge}</Caps>
           </div>
         </div>
         <div>
-          <div style={{ fontFamily: SANS, fontSize: 18.5, fontWeight: 700, color: C.ink, letterSpacing: "-.01em" }}>{title}</div>
-          <p style={{ fontFamily: SANS, fontSize: 15, color: C.mid, margin: "6px 0 0", lineHeight: 1.6, maxWidth: 520 }}>{summary}</p>
+          <div style={{ fontFamily: SERIF, fontSize: 21, fontWeight: 700, color: C.ink, letterSpacing: "-.005em", lineHeight: 1.25 }}>{title}</div>
+          <p style={{ fontFamily: SANS, fontSize: 15.5, color: C.mid, margin: "7px 0 0", lineHeight: 1.6, maxWidth: 520 }}>{summary}</p>
           <div style={{ marginTop: 8 }}>
-            <Caps size={11.5} weight={600} style={{ textTransform: "none", letterSpacing: ".02em" }}>{meta}</Caps>
+            <Caps size={12} weight={600} style={{ textTransform: "none", letterSpacing: ".02em" }}>{meta}</Caps>
           </div>
         </div>
         <div style={{ justifySelf: "end", textAlign: "right" }}>
-          {reviewed ? <Stamp>Reviewed · Mar 14</Stamp> : <Caps color={C.blue} size={12.5}>Open docket →</Caps>}
+          {reviewed ? (
+            <Stamp>Reviewed · Mar 14</Stamp>
+          ) : (
+            <span style={{ display: "inline-block", fontFamily: SANS, fontSize: 14, fontWeight: 700, color: hover ? "#FFF" : C.blue, background: hover ? C.blue : C.surface, border: `1.5px solid ${C.blue}`, borderRadius: 2, padding: "10px 16px", transition: "all .15s", whiteSpace: "nowrap" }}>
+              Open docket →
+            </span>
+          )}
         </div>
       </button>
     </FadeIn>
@@ -673,7 +711,7 @@ const DocketRow = ({ onClick, badge, title, summary, citation, authority, meta, 
 
 const SOURCE_FILTERS = ["All sources", "Laws", "Regulations", "Court decisions", "Standards"];
 
-const SOURCE_DEFS = {
+const SOURCE_DEFS: any = {
   "All sources": "Govira tracks different types of external changes that may require your department’s attention.",
   "Laws": "Requirements created by the legislature. A new or updated law may require changes to department policies, procedures, training, or practices.",
   "Regulations": "Rules issued by government agencies under legal authority. They may add specific requirements for how departments carry out or document their work.",
@@ -684,20 +722,20 @@ const SOURCE_DEFS = {
 const DOCKETS = [
   { key: "updated", filter: "Laws", badge: "UPDATED LAW", wstatus: "Needs review", citation: "HB 6004 §§ 5–6", authority: "CT General Assembly", title: "Crowd management policy requirements", summary: "HB 6004 updated the requirements for how departments handle crowd management. Several existing requirements were strengthened.", meta: "6 changes outlined · Phased effective dates" },
   { key: "newlaw", filter: "Laws", badge: "NEW LAW", wstatus: "New", citation: "HB 6004 §§ 33–35", authority: "CT General Assembly", title: "Office of the Inspector General", summary: "Establishes a new Office of the Inspector General to investigate use-of-force cases. Entirely new; may require new documentation and procedures.", meta: "4 new requirements" },
-  { key: "standard", filter: "Standards", badge: "REVISED STANDARD", wstatus: "In progress", citation: "CALEA Std. 4.2.2", authority: "CALEA", title: "Use of force: reporting and administrative review", summary: "The revised standard expands what agencies must document after force is used and adds a required annual analysis of use-of-force reports.", meta: "3 changes outlined · Next assessment cycle" },
+  { key: "standard", filter: "Standards", badge: "REVISED STANDARD", wstatus: "In progress", citation: "CALEA Std. 4.2.2", authority: "CALEA", title: "Use of force: reporting and administrative review", summary: "The revised standard expands what agencies may need to document after force is used and adds an annual analysis of use-of-force reports.", meta: "3 changes outlined · Next assessment cycle" },
   { key: "reviewed", filter: "Laws", badge: "REVIEWED", reviewed: true, wstatus: "Completed", citation: "HB 6004 §§ 21–22", authority: "CT General Assembly", title: "Consent search limits", summary: "Prohibits consent searches of individuals and limits vehicle searches during traffic stops.", meta: "Reviewed by J. Mauboussin" },
 ];
 
-const DashboardScreen = ({ onOpen }) => {
+const DashboardScreen = ({ onOpen }: any) => {
   const [filter, setFilter] = useState("All sources");
   const shown = DOCKETS.filter((d) => filter === "All sources" || d.filter === filter);
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: "44px 32px 72px" }}>
       <FadeIn>
         <Caps color={C.navy}>Docket · Connecticut · Bethany Police Department</Caps>
-        <h1 style={{ fontFamily: SANS, fontSize: 34, fontWeight: 800, color: C.navy, margin: "10px 0 8px", letterSpacing: "-.015em" }}>Updates</h1>
-        <p style={{ fontFamily: SANS, fontSize: 16, color: C.mid, margin: "0 0 20px", lineHeight: 1.6, maxWidth: 600 }}>
-          Every change that can obligate your agency, from any authority: statutes, accreditation standards,
+        <h1 style={{ fontFamily: SERIF, fontSize: 38, fontWeight: 700, color: C.navy, margin: "10px 0 8px", letterSpacing: "-.005em" }}>Updates</h1>
+        <p style={{ fontFamily: SANS, fontSize: 16.5, color: C.mid, margin: "0 0 20px", lineHeight: 1.6, maxWidth: 620 }}>
+          Every change that may obligate your agency, from any authority: statutes, accreditation standards,
           state regulations, and court decisions. Select a docket to work through it.
         </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
@@ -705,23 +743,23 @@ const DashboardScreen = ({ onOpen }) => {
             const on = filter === f;
             return (
               <button key={f} onClick={() => setFilter(f)} aria-pressed={on}
-                style={{ fontFamily: SANS, fontSize: 13, fontWeight: 700, padding: "8px 16px", borderRadius: 3, cursor: "pointer", border: `1px solid ${on ? C.navy : C.lineStrong}`, background: on ? C.navy : C.surface, color: on ? "#FFF" : C.mid, transition: "all .15s" }}>
+                style={{ fontFamily: SANS, fontSize: 14, fontWeight: 700, padding: "9px 18px", borderRadius: 2, cursor: "pointer", border: `1.5px solid ${on ? C.navy : C.lineStrong}`, background: on ? C.navy : C.surface, color: on ? "#FFF" : C.mid, transition: "all .15s" }}>
                 {f}
               </button>
             );
           })}
         </div>
-        <p style={{ fontFamily: SANS, fontSize: 14, color: C.mid, margin: "-8px 0 20px", lineHeight: 1.6, maxWidth: 640 }}>{SOURCE_DEFS[filter]}</p>
+        <p style={{ fontFamily: SANS, fontSize: 14.5, color: C.mid, margin: "-8px 0 20px", lineHeight: 1.6, maxWidth: 640 }}>{SOURCE_DEFS[filter]}</p>
       </FadeIn>
       {shown.map((d, i) => (
-        <DocketRow key={d.key} delay={60 + i * 70} onClick={() => d.reviewed ? null : onOpen(d.key)} badge={d.badge} reviewed={d.reviewed} wstatus={d.wstatus} citation={d.citation} authority={d.authority} title={d.title} summary={d.summary} meta={d.meta} />
+        <DocketRow key={d.key} delay={60 + i * 70} onClick={() => d.reviewed ? null : onOpen(d.key)} badge={d.badge} reviewed={d.reviewed} citation={d.citation} authority={d.authority} title={d.title} summary={d.summary} meta={d.meta} />
       ))}
       {shown.length === 0 && (
         <FadeIn>
           <div style={{ borderTop: `1px solid ${C.lineStrong}`, borderBottom: `1px solid ${C.lineStrong}`, padding: "36px 12px", textAlign: "center" }}>
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 600, color: C.navy, margin: 0 }}>No case-law dockets yet for Connecticut.</p>
-            <p style={{ fontFamily: SANS, fontSize: 13.5, color: C.mid, margin: "8px 0 0", lineHeight: 1.6 }}>
-              When a court decision changes what your policies must say, it will appear here as a docket with the same
+            <p style={{ fontFamily: SANS, fontSize: 15.5, fontWeight: 600, color: C.navy, margin: 0 }}>No case-law dockets yet for Connecticut.</p>
+            <p style={{ fontFamily: SANS, fontSize: 14, color: C.mid, margin: "8px 0 0", lineHeight: 1.6 }}>
+              When a court decision may change what your policies say, it will appear here as a docket with the same
               policy, operational, and evidence guidance.
             </p>
           </div>
@@ -736,7 +774,7 @@ const DashboardScreen = ({ onOpen }) => {
    HOME — lead with the artifact, not the adjectives
    ============================================================ */
 const HeroDocket = () => (
-  <div style={{ background: C.surface, border: `1px solid ${C.lineStrong}`, borderTop: `4px solid ${C.ochre}`, padding: "18px 20px", boxShadow: "0 1px 0 rgba(27,42,68,.06)", position: "relative" }}>
+  <div style={{ background: C.surface, border: `1px solid ${C.lineStrong}`, borderTop: `4px solid ${C.ochre}`, padding: "18px 20px", boxShadow: "0 2px 0 rgba(24,42,71,.08)", position: "relative" }}>
     <span style={{ position: "absolute", top: -11, right: 14, background: C.navy, color: "#FFF", fontFamily: SANS, fontSize: 11, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", padding: "3px 9px" }}>
       Example docket
     </span>
@@ -748,7 +786,7 @@ const HeroDocket = () => (
         </div>
         <div>
           <Caps size={11}>Citation</Caps>
-          <div style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 700, color: C.navy, marginTop: 3 }}>CT HB 6004, §§ 5–6</div>
+          <div style={{ fontFamily: SERIF, fontSize: 14.5, fontWeight: 700, color: C.navy, marginTop: 2 }}>CT HB 6004, §§ 5–6</div>
         </div>
         <div>
           <Caps size={11}>Effective</Caps>
@@ -757,12 +795,12 @@ const HeroDocket = () => (
       </div>
       <Caps color={C.blue} size={11.5}>Open docket →</Caps>
     </div>
-    <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 800, color: C.navy, margin: "12px 0 10px", letterSpacing: "-.01em" }}>
+    <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: C.navy, margin: "12px 0 10px", letterSpacing: "-.005em" }}>
       Crowd management policy requirements
     </div>
     <div style={{ borderTop: `1px solid ${C.line}`, paddingTop: 12 }}>
       <Caps size={11} color={C.navy}>Legislative change</Caps>
-      <p style={{ fontFamily: SERIF, fontSize: 15, lineHeight: 1.75, color: C.ink, margin: "8px 0 0" }}>
+      <p style={{ fontFamily: SERIF, fontSize: 15.5, lineHeight: 1.75, color: C.ink, margin: "8px 0 0" }}>
         Departments manage crowd incidents using <Removed>general operational judgment and local standards</Removed>{" "}
         <Added>a uniform statewide policy addressing force expectations, training, documentation, and individual rights</Added>.
       </p>
@@ -774,31 +812,31 @@ const HeroDocket = () => (
   </div>
 );
 
-const HomeScreen = ({ onGetStarted, onViewExample }) => (
+const HomeScreen = ({ onGetStarted, onViewExample }: any) => (
   <div style={{ background: C.bg }}>
     {/* Hero: flat, artifact-led */}
     <div style={{ borderBottom: `1px solid ${C.lineStrong}` }}>
       <div className="gv-hero" style={{ maxWidth: 1080, margin: "0 auto", padding: "64px 32px 56px", display: "grid", gridTemplateColumns: "1.05fr .95fr", gap: 56, alignItems: "center" }}>
         <FadeIn>
           <div>
-            <Caps color={C.navy}>One queue for every change that obligates your agency</Caps>
-            <h1 style={{ fontFamily: SANS, fontSize: "clamp(34px,4.5vw,48px)", fontWeight: 800, color: C.navy, lineHeight: 1.12, letterSpacing: "-.02em", margin: "14px 0 16px" }}>
+            <Caps color={C.navy}>One queue for every change that may obligate your agency</Caps>
+            <h1 style={{ fontFamily: SERIF, fontSize: "clamp(36px,4.5vw,52px)", fontWeight: 700, color: C.navy, lineHeight: 1.14, letterSpacing: "-.01em", margin: "14px 0 16px" }}>
               When requirements change, know what to review, what to do, and what proofs to plan.
             </h1>
-            <p style={{ fontFamily: SANS, fontSize: 17, color: C.mid, lineHeight: 1.7, margin: "0 0 22px", maxWidth: 480 }}>
+            <p style={{ fontFamily: SANS, fontSize: 17.5, color: C.mid, lineHeight: 1.7, margin: "0 0 22px", maxWidth: 490 }}>
               A statute, a revised standard, a regulation, a ruling: each arrives on its own schedule. Govira turns
-              external requirement changes into an internal action plan, then you complete the work in the systems
+              external requirement changes into a suggested action plan, then you complete the work in the systems
               you already use.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", border: `1px solid ${C.lineStrong}`, background: C.surface, borderRadius: 3 }}>
+              <div style={{ display: "flex", alignItems: "center", border: `1.5px solid ${C.lineStrong}`, background: C.surface, borderRadius: 2 }}>
                 <span style={{ padding: "0 0 0 12px" }}>
                   <Caps size={11.5}>State</Caps>
                 </span>
                 <select
                   aria-label="Select your state"
                   defaultValue="CT"
-                  style={{ fontFamily: SANS, fontSize: 15, fontWeight: 600, color: C.navy, background: "transparent", border: "none", padding: "12px 10px 12px 8px", cursor: "pointer" }}
+                  style={{ fontFamily: SANS, fontSize: 15.5, fontWeight: 600, color: C.navy, background: "transparent", border: "none", padding: "13px 10px 13px 8px", cursor: "pointer" }}
                 >
                   <option value="CT">Connecticut</option>
                   <option value="NY" disabled>New York (soon)</option>
@@ -809,12 +847,12 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
               <Btn onClick={onGetStarted}>View Connecticut docket</Btn>
               <Btn variant="ghost" onClick={onViewExample}>See an example docket</Btn>
             </div>
-            <p style={{ fontFamily: SANS, fontSize: 13.5, color: C.faint, margin: "14px 0 0", lineHeight: 1.5 }}>
+            <p style={{ fontFamily: SANS, fontSize: 14, color: C.faint, margin: "14px 0 0", lineHeight: 1.55 }}>
               One special-session bill, HB 6004, produced six items to review, six department actions, and proofs
               to plan, with phased effective dates. Three changes can still mean thirty policies touched.
             </p>
             <div style={{ marginTop: 22, borderLeft: `3px solid ${C.lineStrong}`, padding: "8px 14px" }}>
-              <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: C.navy, margin: 0, lineHeight: 1.65 }}>
+              <p style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 600, color: C.navy, margin: 0, lineHeight: 1.65 }}>
                 Govira does not determine compliance, store evidence, or replace legal counsel. Departments stay in
                 control of every update.
               </p>
@@ -832,7 +870,7 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "40px 32px 44px" }}>
         <FadeIn>
           <Caps color={C.navy}>Why this is hard by hand</Caps>
-          <p style={{ fontFamily: SANS, fontSize: 16, color: C.mid, margin: "10px 0 24px", lineHeight: 1.65, maxWidth: 640 }}>
+          <p style={{ fontFamily: SANS, fontSize: 16.5, color: C.mid, margin: "10px 0 24px", lineHeight: 1.65, maxWidth: 640 }}>
             Connecticut publishes every act on its official Acts Effective lists, alongside dormancy fees, hospice
             rules, and everything else the session produced. Someone has to read the whole list to find your part of it.
           </p>
@@ -847,14 +885,14 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
               <React.Fragment key={num}>
                 {i > 0 && <div style={{ display: "flex", alignItems: "center", color: C.lineStrong, fontSize: 20 }} aria-hidden>→</div>}
                 <div>
-                  <div style={{ fontFamily: SANS, fontSize: 40, fontWeight: 800, color: i === 2 ? C.navy : C.mid, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{num}</div>
-                  <div style={{ fontFamily: SANS, fontSize: 14.5, fontWeight: 700, color: C.ink, margin: "8px 0 5px" }}>{label}</div>
-                  <p style={{ fontFamily: SANS, fontSize: 13, color: C.mid, margin: 0, lineHeight: 1.55 }}>{desc}</p>
+                  <div style={{ fontFamily: SERIF, fontSize: 60, fontWeight: 700, color: i === 2 ? C.navy : C.mid, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{num}</div>
+                  <div style={{ fontFamily: SANS, fontSize: 15, fontWeight: 700, color: C.ink, margin: "10px 0 5px" }}>{label}</div>
+                  <p style={{ fontFamily: SANS, fontSize: 13.5, color: C.mid, margin: 0, lineHeight: 1.55 }}>{desc}</p>
                 </div>
               </React.Fragment>
             ))}
           </div>
-          <p style={{ fontFamily: SANS, fontSize: 11.5, color: C.faint, margin: "16px 0 0" }}>
+          <p style={{ fontFamily: SANS, fontSize: 12.5, color: C.faint, margin: "16px 0 0" }}>
             Counts illustrative of a typical Connecticut session. Effective dates run January 1, July 1, October 1, and from passage.
           </p>
         </FadeIn>
@@ -866,8 +904,8 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "56px 32px" }}>
         <FadeIn>
           <Caps color={C.navy}>How a docket works</Caps>
-          <h2 style={{ fontFamily: SANS, fontSize: 30, fontWeight: 800, color: C.navy, margin: "10px 0 24px", letterSpacing: "-.015em" }}>
-            From legal update to review plan.
+          <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 700, color: C.navy, margin: "10px 0 24px", letterSpacing: "-.005em" }}>
+            From legal update to action plan.
           </h2>
         </FadeIn>
         <FadeIn delay={100}>
@@ -878,16 +916,16 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
               ["3", "See what to do", "The practical steps beyond documents: training, briefings, forms, assignments."],
               ["4", "Plan the proofs", "Records departments commonly use to demonstrate implementation. Proofs to consider, not verdicts."],
               ["5", "The docket is the plan", "Work through it in place. A summary of your decisions builds automatically, ready for your existing systems."],
-            ].map(([n, title, desc], i) => (
-              <div key={n} style={{ display: "grid", gridTemplateColumns: "60px 290px 1fr", gap: 20, padding: "18px 4px", borderBottom: `1px solid ${C.line}`, alignItems: "baseline" }}>
-                <span style={{ fontFamily: SANS, fontSize: 24, fontWeight: 800, color: C.navy, fontVariantNumeric: "tabular-nums" }}>{n}.</span>
-                <span style={{ fontFamily: SANS, fontSize: 16.5, fontWeight: 700, color: C.ink }}>{title}</span>
-                <span style={{ fontFamily: SANS, fontSize: 15, color: C.mid, lineHeight: 1.6 }}>{desc}</span>
+            ].map(([n, title, desc]) => (
+              <div key={n} style={{ display: "grid", gridTemplateColumns: "68px 290px 1fr", gap: 20, padding: "18px 4px", borderBottom: `1px solid ${C.line}`, alignItems: "baseline" }}>
+                <span style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, color: C.navy, fontVariantNumeric: "tabular-nums" }}>{n}.</span>
+                <span style={{ fontFamily: SERIF, fontSize: 18.5, fontWeight: 700, color: C.ink }}>{title}</span>
+                <span style={{ fontFamily: SANS, fontSize: 15.5, color: C.mid, lineHeight: 1.6 }}>{desc}</span>
               </div>
             ))}
           </div>
-          <p style={{ fontFamily: SANS, fontSize: 14, color: C.mid, margin: "18px 0 0", lineHeight: 1.65, maxWidth: 640 }}>
-            <strong style={{ color: C.navy }}>Where it ends:</strong> you leave with an action plan and execute it in
+          <p style={{ fontFamily: SANS, fontSize: 14.5, color: C.mid, margin: "18px 0 0", lineHeight: 1.65, maxWidth: 640 }}>
+            <strong style={{ color: C.navy }}>Where it ends:</strong> you leave with a suggested action plan and execute it in
             PowerDMS or wherever the work already happens. Govira ends where execution begins.
           </p>
         </FadeIn>
@@ -897,10 +935,10 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
     {/* Value: specificity over slogans */}
     <div style={{ maxWidth: 1080, margin: "0 auto", padding: "56px 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56 }} className="gv-two">
       <FadeIn>
-        <h2 style={{ fontFamily: SANS, fontSize: 30, fontWeight: 800, color: C.navy, lineHeight: 1.25, letterSpacing: "-.015em", margin: 0 }}>
+        <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 700, color: C.navy, lineHeight: 1.25, letterSpacing: "-.005em", margin: 0 }}>
           Built for the person who answers to the assessor.
         </h2>
-        <p style={{ fontFamily: SANS, fontSize: 15.5, color: C.mid, lineHeight: 1.7, margin: "14px 0 0" }}>
+        <p style={{ fontFamily: SANS, fontSize: 16, color: C.mid, lineHeight: 1.7, margin: "14px 0 0" }}>
           When requirements change, accreditation managers are the ones who identify what may need review, brief
           command staff, coordinate next steps, and prepare for future assessment. Govira organizes that work;
           it does not take it over.
@@ -915,38 +953,41 @@ const HomeScreen = ({ onGetStarted, onViewExample }) => (
             "No integration or technical setup required",
           ].map((t, i) => (
             <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline", padding: "13px 2px", borderBottom: `1px solid ${C.line}` }}>
-              <span style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 800, color: C.forest }}>✓</span>
-              <span style={{ fontFamily: SANS, fontSize: 15.5, color: C.ink }}>{t}</span>
+              <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 800, color: C.forest }}>✓</span>
+              <span style={{ fontFamily: SANS, fontSize: 16, color: C.ink }}>{t}</span>
             </div>
           ))}
         </div>
       </FadeIn>
     </div>
 
-    {/* CTA: flat navy band */}
+    {/* CTA: navy band, echoes the masthead */}
     <div style={{ background: C.navy }}>
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "48px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
         <div>
-          <h2 style={{ fontFamily: SANS, fontSize: 26, fontWeight: 800, color: "#FFF", margin: 0, letterSpacing: "-.015em" }}>Ready to review what changed?</h2>
-          <p style={{ fontFamily: SANS, fontSize: 15, color: "rgba(255,255,255,.72)", margin: "8px 0 0", lineHeight: 1.6 }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: "#FFF", margin: 0, letterSpacing: "-.005em" }}>Ready to review what changed?</h2>
+          <p style={{ fontFamily: SANS, fontSize: 15.5, color: "rgba(255,255,255,.78)", margin: "8px 0 0", lineHeight: 1.6 }}>
             Open the Connecticut docket and work through it section by section.
           </p>
         </div>
-        <button onClick={onGetStarted} style={{ fontFamily: SANS, fontSize: 15.5, fontWeight: 700, padding: "14px 28px", borderRadius: 3, border: "none", background: "#FFF", color: C.navy, cursor: "pointer" }}>
+        <button onClick={onGetStarted} style={{ fontFamily: SANS, fontSize: 16, fontWeight: 700, padding: "15px 30px", borderRadius: 2, border: "none", background: "#FFF", color: C.navy, cursor: "pointer" }}>
           View legal updates →
         </button>
       </div>
     </div>
 
-    <div style={{ maxWidth: 1080, margin: "0 auto", padding: "26px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <ShieldLogo size={16} />
-        <Caps color={C.navy} size={12.5} weight={800}>Govira</Caps>
-        <Caps size={11.5} weight={600} style={{ textTransform: "none", letterSpacing: ".02em" }}>Change dockets for accredited public safety agencies</Caps>
+    {/* Formal footer */}
+    <div style={{ background: C.navy, borderTop: "1px solid rgba(255,255,255,.15)" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "24px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <ShieldLogo size={18} tone="#FFF" check={C.navy} />
+          <span style={{ fontFamily: SERIF, fontSize: 15, fontWeight: 700, color: "#FFF", letterSpacing: ".12em" }}>GOVIRA</span>
+          <span style={{ fontFamily: SANS, fontSize: 13, fontWeight: 500, color: "rgba(255,255,255,.7)" }}>Change dockets for accredited public safety agencies</span>
+        </div>
+        <span style={{ fontFamily: SANS, fontSize: 13, fontWeight: 500, color: "rgba(255,255,255,.7)" }}>
+          Departments stay in control of every update. Govira does not replace legal counsel.
+        </span>
       </div>
-      <Caps size={11.5} weight={600} style={{ textTransform: "none", letterSpacing: ".02em" }}>
-        Departments stay in control of every update. Govira does not replace legal counsel.
-      </Caps>
     </div>
   </div>
 );
@@ -1035,7 +1076,7 @@ const oigData = {
   effective: "Phased · 2020 – 2021",
   appliesTo: "All CT law enforcement",
   title: "Office of the Inspector General",
-  summary: "HB 6004 created a new Office of the Inspector General. Here is what your department should be aware of and address.",
+  summary: "HB 6004 created a new Office of the Inspector General. Here is what your department may want to be aware of and address.",
   interpretation:
     "HB 6004 created an independent Office of the Inspector General within the Division of Criminal Justice. It can investigate peace officers’ use of force, issue subpoenas, and recommend certification actions to POST. Most of this describes what the new office does; your department’s work is making sure referral, reporting, and notification procedures account for it.",
   redline: {
@@ -1090,7 +1131,7 @@ const caleaData = {
   effective: "Next assessment cycle",
   appliesTo: "CALEA-accredited agencies",
   title: "Use of force: reporting and administrative review",
-  summary: "CALEA revised the standard governing use-of-force reporting. No law changed; the accreditation requirement did, and your files must reflect it by your next on-site.",
+  summary: "CALEA revised the standard governing use-of-force reporting. No law changed; the accreditation requirement did, and your files may need to reflect it before your next on-site.",
   interpretation:
     "The revised standard expands what a written directive must require after force is used: de-escalation documentation, supervisor administrative review within a defined timeframe, and a documented annual analysis of use-of-force reports. Agencies that met the prior standard may still fall short of the revised one.",
   redline: {
@@ -1143,7 +1184,7 @@ const caleaData = {
 /* ============================================================
    APP
    ============================================================ */
-export default function GoviraRedesign() {
+export default function Page() {
   const [screen, setScreen] = useState("home");
   const goDashboard = () => setScreen("dashboard");
   useEffect(() => { window.scrollTo({ top: 0 }); }, [screen]);
@@ -1152,8 +1193,9 @@ export default function GoviraRedesign() {
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: SANS, color: C.ink, WebkitFontSmoothing: "antialiased" }}>
       <link href={FONTS} rel="stylesheet" />
       <style>{`
-        button:focus-visible { outline: 2px solid ${C.blue}; outline-offset: 2px; }
+        button:focus-visible { outline: 3px solid ${C.blue}; outline-offset: 2px; }
         ::selection { background: rgba(31,78,156,.14); }
+        .gv-link:hover { color: ${C.navy}; }
         @media (max-width: 880px) {
           .gv-funnel { grid-template-columns: 1fr !important; }
           .gv-funnel > div[aria-hidden] { display: none !important; }
@@ -1166,7 +1208,7 @@ export default function GoviraRedesign() {
       `}</style>
       <Header onHome={() => setScreen("home")} />
       {screen === "home" && <HomeScreen onGetStarted={goDashboard} onViewExample={() => setScreen("updated")} />}
-      {screen === "dashboard" && <DashboardScreen onOpen={(key) => setScreen(key)} />}
+      {screen === "dashboard" && <DashboardScreen onOpen={(key: any) => setScreen(key)} />}
       {screen === "updated" && <LawDetail data={crowdData} onBack={goDashboard} />}
       {screen === "newlaw" && <LawDetail data={oigData} onBack={goDashboard} />}
       {screen === "standard" && <LawDetail data={caleaData} onBack={goDashboard} />}
